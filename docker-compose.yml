@@ -26,8 +26,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # =================================================================
-version: "3.0"
-
 services:
   postgis:
     image: postgis/postgis:15-3.3-alpine
