@@ -1,0 +1,3 @@
+.env
+./postgis/data
+./postgis/initDB.sql
