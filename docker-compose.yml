@@ -33,7 +33,7 @@ services:
     env_file:
       - .env     # path to your .env file
     volumes:
-       - ./postgis/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+       - ./postgis/pg_hba.conf:/etc/postgresql/pg_hba.conf
        - ./postgis/data:/var/lib/postgresql/data
     networks:
       - database
@@ -44,7 +44,7 @@ services:
       "postgres", 
       "-c", "max_wal_size=2GB", 
       "-c", "listen_addresses=*",
-      "-c", "hba_file=/var/lib/postgresql/data/pg_hba.conf"
+      "-c", "hba_file=/etc/postgresql/pg_hba.conf"
     ]
     logging:
       driver: "json-file"
