@@ -52,13 +52,24 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  db_and_api_init:
-    build: ./utils/
+  setup_local_db_and_die:
+    build: ./utils/local
     container_name: db_and_api_init
     env_file:
-      - .env     # path to your .env file
+      - .env
     volumes:
       - ./data:/data # where *.SHP to upload are
+    depends_on:
+      - postgis
+    networks:
+      - database
+
+  sync_remote_db_daily:
+    build: ./utils/remote
+    container_name: sync_remote_db
+    restart: unless-stopped
+    env_file:
+      - .env
     depends_on:
       - postgis
     networks:
