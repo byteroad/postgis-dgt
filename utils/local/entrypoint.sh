@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Export environment variables for cron
-env | grep -E '^(POSTGRES_|LOCAL_CRON_|PATH=)' | sed 's/=/="/;s/$/"/' > /app/env.sh
+env | grep -E '^(POSTGRES_|LOCAL_CRON_|PATH=)' | sed 's/^/export /;s/=/="/;s/$/"/' > /app/env.sh
 
 # Run once on container startup
 echo "[INFO] Running initial import on container startup..."

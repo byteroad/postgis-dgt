@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-env | grep -E '^(SRC_|TABLE_LIST|OUTPUT_DIR|RETRY_|REMOTE_CRON_|PATH=)' | sed 's/=/="/;s/$/"/' > /app/env.sh
+env | grep -E '^(SRC_|TABLE_LIST|OUTPUT_DIR|RETRY_|REMOTE_CRON_|PATH=)' | sed 's/^/export /;s/=/="/;s/$/"/' > /app/env.sh
 
 REMOTE_CRON_SCHEDULE="${REMOTE_CRON_SCHEDULE:-0 6 * * *}"
 
