@@ -57,7 +57,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  setup_local_db:
+  setup_local_db_and_listen:
     build: ./utils/local
     container_name: db_and_api_init
     restart: unless-stopped
