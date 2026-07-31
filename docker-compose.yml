@@ -46,32 +46,42 @@ services:
       "-c", "listen_addresses=*",
       "-c", "hba_file=/etc/postgresql/pg_hba.conf"
     ]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-admin} -d $${POSTGRES_DB:-geodb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
 
-  setup_local_db_and_die:
+  setup_local_db:
     build: ./utils/local
     container_name: db_and_api_init
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
       - ./data:/data # where *.SHP to upload are
     depends_on:
-      - postgis
+      postgis:
+        condition: service_healthy
     networks:
       - database
 
-  sync_remote_db_daily:
+  export_db_daily:
     build: ./utils/remote
-    container_name: sync_remote_db
+    container_name: export_db_daily
     restart: unless-stopped
     env_file:
       - .env
+    volumes:
+      - ./data:/data
     depends_on:
-      - postgis
+      postgis:
+        condition: service_healthy
     networks:
       - database
 
