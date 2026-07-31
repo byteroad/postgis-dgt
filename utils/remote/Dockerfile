@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add --no-cache bash postgresql16-client gdal
+RUN apk add --no-cache bash postgresql16-client gdal gdal-tools gdal-driver-PG
 
 WORKDIR /app
 

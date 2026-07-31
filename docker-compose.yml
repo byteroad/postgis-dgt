@@ -59,7 +59,7 @@ services:
 
   setup_local_db_and_listen:
     build: ./utils/local
-    container_name: db_and_api_init
+    container_name: setup_local_db_and_listen
     restart: unless-stopped
     env_file:
       - .env

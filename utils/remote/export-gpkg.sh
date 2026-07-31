@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Source container env if available
+[ -f /app/env.sh ] && . /app/env.sh
+
 # Source Database Connection Details
 # SRC_HOST="remote-source.example.com"
 # SRC_PORT="5432"

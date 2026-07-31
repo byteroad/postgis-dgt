@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Source container env if available
+[ -f /app/env.sh ] && . /app/env.sh
+
 cd /app
 
 if [ -n "$POSTGRES_PASSWORD" ]; then

@@ -8,4 +8,8 @@ echo "$REMOTE_CRON_SCHEDULE . /app/env.sh && /app/export-gpkg.sh >> /var/log/cro
 
 echo "Schedule: $REMOTE_CRON_SCHEDULE"
 
-exec crond -f -l 2
+if [ "$#" -gt 0 ]; then
+    exec "$@"
+else
+    exec crond -f -l 2
+fi
