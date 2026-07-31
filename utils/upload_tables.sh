@@ -21,5 +21,8 @@ echo "Uploading cos2023v1 table"
 # Load cos2023v1
 poetry run python3 ./upload_tables.py --host postgis  --database $POSTGRES_DB \
     --user $POSTGRES_USER $PASSWORD_ARG --table cos2023v1 --input /data/COS2023v1_municipios.shp
-
+echo "Uploading cos2025v1 table"
+# Load cos2025v1
+poetry run python3 ./upload_tables.py --host postgis  --database $POSTGRES_DB \
+    --user $POSTGRES_USER $PASSWORD_ARG --table cos2025v1 --input /data/cos2025v1.gpkg
 exit 0
