@@ -15,11 +15,6 @@ To load tables
 poetry run python3 ./upload_tables.py --user postgres --password SOMEPASSWORD
 ```
 
-To generate views
-
-```
-poetry run python3 ./create_views.py --user postgres --password SOMEPASSWORD --table crus --column Municipio
-```
 
 # Data export (GeoPackage)
 

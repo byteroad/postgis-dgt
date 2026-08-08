@@ -4,9 +4,9 @@ This repository provides a containerized **PostGIS** database setup alongside au
 
 ## Services
 
-* **`postgis`**: PostGIS spatial database instance.
-* **`setup_local_db_and_listen`**: Runs on startup and periodically (configured via `LOCAL_CRON_SCHEDULE`) to import local shapefiles and GeoPackages from `./data` into PostGIS. Uses database metadata tracking to skip files that haven't changed.
-* **`export_db_daily`**: Runs periodically (configured via `REMOTE_CRON_SCHEDULE`) to connect to a remote PostGIS database and export specified spatial tables as GeoPackage (`.gpkg`) files into `./data` using GDAL (`ogr2ogr`).
+* **`postgis`**: PostGIS spatial database container instance (`postgis/postgis:15-3.3-alpine`).
+* **`setup_local_db_and_listen`**: Ingestion service that runs on startup and periodically (`LOCAL_CRON_SCHEDULE`) to import local shapefile and GeoPackage datasets from `./data` into PostGIS, using metadata hash tracking to skip unchanged files. To import a new gpkg you need to add it to utils/local/upload_tables.sh.
+* **`export_db_daily`**: Export service that runs periodically (`REMOTE_CRON_SCHEDULE`) to connect to a remote database and export specified spatial tables into GeoPackage (`.gpkg`) files in `./data` using GDAL (`ogr2ogr`).
 
 ## Configuration
 
