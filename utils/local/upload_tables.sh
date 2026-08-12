@@ -25,6 +25,6 @@ poetry run python3 ./upload_tables.py --host "$HOST_ARG" --database "$DB_ARG" \
 
 echo "Checking / uploading cadastralparcel table..."
 poetry run python3 ./upload_tables.py --host "$HOST_ARG" --database "$DB_ARG" \
-    --user "$USER_ARG" $PASSWORD_ARG --table cadastralparcel --input /data/inspire_mv_cadastralparcel_4326.gpkg
+    --user "$USER_ARG" $PASSWORD_ARG --primary_key nationalcadastralreference --table cadastralparcel --input /data/inspire_mv_cadastralparcel_4326.gpkg
 
 exit 0
