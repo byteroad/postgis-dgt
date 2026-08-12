@@ -36,7 +36,7 @@ def calculate_input_hash(filepath):
     """Calculate MD5 hash of input file (and sidecars if shapefile)."""
     hasher = hashlib.md5()
     files_to_hash = [filepath]
-    
+
     # If shapefile, include sidecar files (.dbf, .shx, .prj, .cpg) in hash calculation
     if filepath.endswith('.shp'):
         base_path = os.path.splitext(filepath)[0]
@@ -108,9 +108,24 @@ try:
         print(f"[INFO] Converting CRS from {gdf.crs} to EPSG:4326...")
         gdf = gdf.to_crs(epsg=4326)
 
+    if PRIMARY_KEY in gdf.columns:
+        print(f"[INFO] Using data column '{PRIMARY_KEY}' as primary key.")
+        gdf = gdf.set_index(PRIMARY_KEY, drop=True)
+    else:
+        print(
+            f"[INFO] '{PRIMARY_KEY}' not found as a column in the source data. "
+            f"Using auto-generated row index as '{PRIMARY_KEY}' instead."
+        )
+
     # Write GeoDataFrame to PostgreSQL
     print(f"[INFO] Writing geodataframe to PostGIS table '{TABLE}'...")
     gdf.to_postgis(TABLE, engine, if_exists='replace', index=True, index_label=PRIMARY_KEY, chunksize=10000)
+
+    # Explictly adding Primary Key
+    with engine.connect() as conn:
+        print(f"[INFO] Adding primary key constraint on '{PRIMARY_KEY}'...")
+        conn.execute(text(f'ALTER TABLE public."{TABLE}" ADD PRIMARY KEY ("{PRIMARY_KEY}");'))
+        conn.commit()
 
     # Update tracker table
     with engine.connect() as conn:
